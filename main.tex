@@ -1,0 +1,62 @@
+% В этом файле следует писать текст работы, разбивая его на
+% разделы (section), подразделы (subsection) и, если нужно,
+% главы (chapter).
+
+% Предварительно следует указать необходимую информацию
+% в файле SETUP.tex
+
+\input{preamble.tex}
+
+\begin{document}
+
+\Intro
+
+Здесь вам нужно писать введение. Некоторые часто используемые команды приведены в качестве примера ниже (и варианты — в комментариях).
+
+Your introduction goes here! Some examples of commonly used commands and features are listed below, to help you get started. If you have a question, please use the help menu (``?'') on the top bar to search for help or ask us a question.
+
+% Если typeOfWork в SETUP.tex задан как 2 или 3, то начинать
+% надо не с section (раздел), а с главы (chapter)
+\chapter{Синтаксис и семантика языка программирования}
+\section{Синтаксис}
+Рассмотрим язык программиования 
+\section{Семантика}
+
+\chapter{Основные термины}
+\section{TMS отношение}
+
+\chapter{Результаты}
+
+\section{Доказательство теоремы 1 (Необходимость)}
+
+\section{Доказательство теоремы 1 (Достаточность)}
+
+
+\Conc
+
+We hope you find \LaTeX\ useful, and please let us know if you have any feedback.
+
+Помните, что на все пункты списка литературы должны быть ссылки. \LaTeX\ просто не добавит информацию об издании из bib"/файла, если на это издание нет ссылки в тексте. Часто студенты используют в работе  электронные ресурсы: в этом нет ничего зазорного при одном условии: при каждом заимствовании следует ставить соответствующую ссылку. В качестве примера приведём ссылку на сайт нашего института~\autocite{mmcs}.
+
+Для дальнейшего изучения \LaTeX\ рекомендуем книгу Львовского~\autocite{Lvo2003}: она хорошо написана, хотя и несколько устарела.
+Обычно стоит искать подсказки на
+\href{http://tex.stackexchange.com/}{tex.stackexchange.com}, а также
+читать документацию по установленным пакетам с помощью
+команды
+\begin{Verb}
+texdoc имя_пакета
+\end{Verb}
+или на \href{http://ctan.org/}{ctan.org}.
+
+% Печать списка литературы (библиографии)
+\printbibliography[heading=bibintoc%
+    %,title=Библиография % если хочется это слово
+]
+% Файл со списком литературы: biblio.bib
+% Подробно по оформлению библиографии:
+% см. документацию к пакету biblatex-gost
+% http://ctan.mirrorcatalogs.com/macros/latex/exptl/biblatex-contrib/biblatex-gost/doc/biblatex-gost.pdf
+% и огромное количество примеров там же:
+% http://mirror.macomnet.net/pub/CTAN/macros/latex/contrib/biblatex-contrib/biblatex-gost/doc/biblatex-gost-examples.pdf
+
+\end{document}
