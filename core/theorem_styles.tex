@@ -6,13 +6,15 @@
 \theoremstyle {plain} %
 \theoremheaderfont {\normalfont \bfseries} %
 \theorembodyfont {\slshape} %
-\theoremsymbol {\ensuremath {_\Box}} %
+% \theoremsymbol {\ensuremath {_\Box}} %
 \theoremseparator {:} %
 \newtheorem {mystatement} {Утверждение} [section] %
 \newtheorem {mylemma} {Лемма} [section] %
 \newtheorem {mycorollary} {Следствие} [section] %
+\newtheorem{theorem}{Теорема}
+\newtheorem{lemma}{Лемма}
 
-\theoremstyle {nonumberplain} %
+\theoremstyle {plain} %
 \theoremseparator {.} %
 \theoremsymbol {\ensuremath {_\diamondsuit}} %
 \newtheorem {mydefinition} {Определение} %
@@ -25,10 +27,11 @@
 \newtheorem {mytask} {Задача} [section]%
 \renewcommand{\themytask}{\arabic{mytask}}
 
-\theoremheaderfont {\scshape} %
+\theoremheaderfont {\normalfont \bfseries}
+% \theoremheaderfont {\scshape} %
 \theorembodyfont {\upshape} %
 \theoremstyle {nonumberplain} %
-\theoremseparator {} %
+\theoremseparator {:} %
 \theoremsymbol {\rule {1ex} {1ex}} %
 \newtheorem {myproof} {Доказательство} %
 
