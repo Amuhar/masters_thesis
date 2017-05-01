@@ -202,13 +202,37 @@ history(\tau_{\psi})|_{\neg aborted} = &\quad history(\tau''H^{cc})|_{\neg abort
 получаем \eqref{eq:transform4iii}. Так как любая транзакция $T'$ из истории $history(\tau'|_{t_0})$ является либо транзакцией $T$, либо $T' \prec_{(H_1\psi)|_{t_0}} T$, то из \eqref{eq:transform4iii} следует, что $history(\tau'')|_{\neg abortedtx} = H''_1\psi$.
 \end{itemize}
 \end{myproof}
+\begin{lemma}\label{sufficiency3}
+Пусть H --- история, в которой все прерванные транзакции прерываются мгновенно, и S --- история такая, что $H|_{\neg abortedtx} \sqsubseteq_{op} S$. Тогда существует история $S' \in addab(S)$ такая, что $H \sqsubseteq_{op} S'$. 
+\end{lemma}
+\begin{myproof}
+Пусть $n$ --- число прерванных транзакций истории $H$. Для построения истории $S'$ построим по индукции последовательность $S_i, i = 0 \ldots n$, для которой будут выполнятся следующие условия:
+\begin{align}\label{eq:SiInduct}
+\begin{split}
+|aborted(S_i)| = i; \; S_i \in addab(S); \; \{\psi| \psi \in S_i\} \subseteq \{\psi | \psi \in H \}; \\ \forall \; \psi_1, \psi_2 \in S_i: \psi_1 \prec_H \psi_2 \implies \psi_1 \prec_{S_i} \psi_2.
+\end{split}
+\end{align}
+
+Пусть для $i = 0$ $S_0 = S$ и все требования \eqref{eq:SiInduct} выполнены. Предположим, что $S_i$ удовлетворяет требованиям \eqref{eq:SiInduct}. Построим $S_{i+1}$ из $S_i$. Пусть $H = H_1\psi_{b}H_2\psi_{a}H_3$, где $\psi_b = (\_, t, txbegin)$, $\psi_a = (\_,t, aborted)$, $H_2|_t = \varepsilon$ и $$\neg \; \exists \; \psi' \; \psi' = (\_, \_, txbegin) \in H_1 \land txof(\psi', H) \in aborted(H) \land \psi' \notin S_i.$$
+
+Транзакция $\psi_b\psi_a$ --- первая транзакция в истории H, которая не принадлежит $S_i$. Рассмотрим два случая:
+\begin{itemize}
+\item[--] $H_1$ не содержит $committed$ или $aborted$ действий. Пусть $S_{i+1} = \psi_b\psi_{a}S_i$. Нужно показать, что для любого $\psi' \in S_i$ выполняется $\psi' \prec_H \psi_b \implies \psi' \prec_{S_{i+1}} \psi_b$ или $\psi_a \prec_H \psi' \implies \psi_a \prec_{S_{i+1}} \psi'$. Согласно конструкции $S_{i+1}$ выполняется последнее условие. $H_1$ не может содержать $committed$ или $aborted$ действий, поэтому $H_1$ не содержит действий потока $t$. Следовательно, отношение $\psi' \prec_H \psi_b$ не выполняется для любого $\psi'$. 
+\item[--] $H_1$ содержит $committed$ или $aborted$ действия. Пусть $\psi$ --- последнее $committed$ или $aborted$ действие в $S_i$, которое также принадлежит $H_1$. Пусть $S_{i} = S'\psi{S''}$, $S_{i+1} = S'\psi\psi_b\psi_a{S''}$. Покажем, что для любого $\psi' \in S_i$ выполняется $\psi' \prec_H \psi_b \implies \psi' \prec_{S_{i+1}} \psi_b$ или $\psi_a \prec_H \psi' \implies \psi_a \prec_{S_{i+1}} \psi'$.
+
+Предположим, что $\psi' \prec_{H} \psi_b$ для $\psi' \in S_i$, тогда $\psi' \in H_1$. В соответствии с выбором $\psi_b$, $\psi_a$, $\psi$ все $committed$ и $aborted$ действия из $H_1$ принадлежат $S'\psi$. Если $\psi'$ --- $committed$ или $aborted$ действие, тогда $\psi' \in S'\psi$. Из построения $S_{i+1}$ следует, что $\psi' \prec_{S_{i+1}} \psi_b$. Если $\psi'$ --- действие потока $t$, тогда $\psi'$ либо $committed$ или $aborted$ действие, либо $\psi'$ предшествует такому действию $\psi'' \in S_i$ потока $t$ в $H_1$: $\psi' \prec_{H_1} \psi''$. Тогда $\psi' \prec_{S'\psi} \psi''$ и $\psi' \prec_{S_{i+1}} \psi''$. Следовательно, $\psi'' \prec_{S_{i+1}} \psi_b$ и $\psi' \prec_{S_{i+1}} \psi_b$. 
+
+Предположим, что $\psi_a \prec_{H} \psi'$ для $\psi' \in S_i$, тогда $\psi' \in H_3$. Если $\psi' = (\_,\_, txbegin)$, тогда $\psi \prec_{H} \psi'$. Так как для $S_i$ выполняются условия \eqref{eq:SiInduct}, то $\psi \prec_{S_i} \psi'$ и $\psi' \in S''$. Тогда из построения $S_{i+1}$ следует, что $\psi_a \prec_{S_{i+1}} \psi'$. Если $\psi'$ --- действие потока $t$, тогда $\psi'$ либо $txbegin$ действие, либо $\psi'$ следует за $txbegin$ действием $\psi'' \in S_i$ потока $t$ в $H_3$: $\psi'' \prec_{H_3} \psi'$ и $\psi'' \prec_{S_i} \psi'$. Так как $\psi \in H_1$, то $\psi \prec_H \psi''$. Из этого следует, что $\psi \prec_{S_i} \psi''$, $\psi'', \psi' \in S''$ и $\psi'' \prec_{S_{i+1}} \psi'$. Из построения $S_{i+1}$ следует, что $\psi_a \prec_{S_{i+1}} \psi''$. Следовательно, $\psi_a \prec_{S_{i+1}} \psi'$. 
+\end{itemize}
+
+\end{myproof}
 \begin{lemma}\label{sufficiency4}
 Если $\mathcal{T}_C \sqsubseteq_{tms} \mathcal{T}_A$ и $\mathcal{T}_A$ удовлетворяет 1 и 2 свойствам замкнутости, тогда $\forall \; \tau \in \llbracket P, \mathcal{T}_C\rrbracket(s)$ $\exists \; \tau' \in \llbracket P, \mathcal{T}_A \rrbracket(s)$ такие, что $(\tau'|_{\neg trans} = \tau|_{\neg trans}) \land (\forall \; t \; (\tau'|_t)|_{obs} = (\tau|_t)|_{obs})$.\end{lemma}
 \begin{myproof}
 Пусть $H = history(\tau)$. По предположению леммы $\mathcal{T}_C \sqsubseteq_{tms} \mathcal{T}_A$. Следовательно $\exists \; H^c \in comp(H)|_{\neg live}$ и $\exists \; S \in \mathcal{T}_A$ такие, что $H^c|_{com} \sqsubseteq_{op} S$. Тогда $H^c = (H|_{\neg live})H'$, для некоторой последовательности действий $H'$, состоящей из $committed$ и $aborted$ действий.  Пусть $\tau^c = \tau_0H'$, где след $\tau_0$ получен из следа $\tau$ удалением всех действий действующих транзакций. Следовательно, $history(\tau^c) = H^c$.
 
 Покажем, что $\tau^c \in \llbracket P \rrbracket(s)$. Согласно определению множества $A'(P)$ (рисунок \ref{fig:actions}), множество $\llbracket P\rrbracket(s)$ содержит префиксы следа $\tau \in \llbracket P\rrbracket(s)$. Кроме того, $\llbracket P\rrbracket(s)$ допускает произвольное прерывание и фиксацию транзакций. Так как след $\tau^c$ получен из $\tau$ удалением только некоторых последних транзакций потоков и завершением транзакций, ожидающих фиксацию, то $\tau^c \in \llbracket P\rrbracket(s)$. Кроме того, $\tau^c|_{\neg trans} = \tau|_{\neg trans}$ и $(\tau|_t)|_{obs}$ --- префикс $(\tau^c|_t)|_{obs}$. Пусть $\tau^{na} = \tau^c|_{\neg abortact}$. Согласно утверждению 1 % добавить утверждение и ссылку
-$\tau^{na} \in \llbracket P \rrbracket(s)$. Так как $(H^c|_{\neg abortact})|_{\neg abortedtx} = H^c|_{com} \sqsubseteq_{op} S$, то по лемме 3 % добавить лемму 3 и ссылку
+$\tau^{na} \in \llbracket P \rrbracket(s)$. Так как $(H^c|_{\neg abortact})|_{\neg abortedtx} = H^c|_{com} \sqsubseteq_{op} S$, то по лемме \ref{sufficiency3} % добавить лемму 3 и ссылку
 существует история $S' \in addab(S)$ такая, что $history(\tau^{na}) = H^c|_{\neg abortact} \sqsubseteq_{op} S'$. Так как $S \in \mathcal{T}_A$ и $\mathcal{T}_A$ замкнута относительно мгновенного прерывания транзакций, то $S' \in \mathcal{T}_A$. Так как $\tau^{na} \in \llbracket P \rrbracket(s)$, тогда по лемме 2 % добавить лемму 2 и ссылку
 существует след $\tau'' \in \llbracket P \rrbracket(s)$ такой, что $history(\tau'') = S',$ $$\tau''|_{\neg trans} = \tau^{na}|_{\neg trans} = \tau^c|_{\neg trans} = \tau|_{\neg trans},$$
 и $\tau''|_t = \tau^{na}|_t$. Пусть $\tau'$ --- след, полученный из $\tau''$ удалением последних ответов на запросы каждого потока в $H'$. Тогда $$\tau'|_{\neg trans} = \tau''|_{\neg trans} = \tau|_{\neg trans},$$ $\tau' \in \llbracket P\rrbracket(s)$. Так как $\mathcal{T}_A$ замкнута относительно удаления ответов на запросы, то $history(\tau') \in \mathcal{T}_A$.
