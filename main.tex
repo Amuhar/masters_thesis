@@ -637,7 +637,7 @@ $\forall \; \tau \; \tau \in \llbracket P \rrbracket (s) \implies \tau|_{\neg ab
  &\mathrel{\phantom{=}} z^{t_0}_{i,m} := g^m_{lasttx(t_0,i,m)}; if \left(z^{t_0}_{i,m} \neq 1 \right) then \; mismatch := 1
 \end{flalign*}
 \begin{itemize}
-\item[--] Если транзакция $i \neq k^{t_0}$ завершается действием $abort$, тогда команда $CP^{t_0}_i$ построена следующим образом::
+\item[--] Если транзакция $i \neq k^{t_0}$ завершается действием $abort$, тогда команда $CP^{t_0}_i$ построена следующим образом:
 \begin{alignat}{2}
      CP^{t_0}_i =&\quad \omega^{t_0}_{i} := &\; atomic\{&y^{t_0}_{i,1} := o^{t_0}_{i,1}.f^{t_0}_{i,1}(n^{t_0}_{i,1}); \nonumber \\ 
      &&& if \left (y^{t_0}_{i,1} \neq r^{t_0}_{i,1}\right) then \; mismatch := 1; \nonumber \\
