@@ -1,4 +1,10 @@
 % макросы для начала введения и заключения
+% макросы для начала введения и заключения
+\newcommand{\ProblemStatement}{\addsec{Постановка задачи}}
+\ifthenelse{\value{worktype} > 1}{%
+    \renewcommand{\ProblemStatement}{\addchap{Постановка задачи}}%
+}
+
 \newcommand{\Intro}{\addsec{Введение}}
 \ifthenelse{\value{worktype} > 1}{%
     \renewcommand{\Intro}{\addchap{Введение}}%
